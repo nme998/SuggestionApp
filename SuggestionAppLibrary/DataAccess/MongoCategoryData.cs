@@ -11,7 +11,7 @@ namespace SuggestionAppLibrary.DataAccess
         public MongoCategoryData(IDbConnection db, IMemoryCache cache)
         {
             _cache = cache;
-            _categories = db.CategoryCollection
+            _categories = db.CategoryCollection;
         }
 
         public async Task<List<CategoryModel>> GetAllCategories()
