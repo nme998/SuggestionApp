@@ -2,7 +2,7 @@
 
 namespace SuggestionAppLibrary.DataAccess
 {
-    public class MongoStatusData
+    public class MongoStatusData : IStatusData
     {
         private readonly IMongoCollection<StatusModel> _statuses;
         private readonly IMemoryCache _cache;
@@ -19,8 +19,8 @@ namespace SuggestionAppLibrary.DataAccess
             var output = _cache.Get<List<StatusModel>>(CacheName);
             if (output == null)
             {
-                var results = await _statuses.FindAsync(_ =>  true);
-                output = results.ToList();  
+                var results = await _statuses.FindAsync(_ => true);
+                output = results.ToList();
 
                 _cache.Set(CacheName, output, TimeSpan.FromDays(1));
             }
@@ -28,7 +28,7 @@ namespace SuggestionAppLibrary.DataAccess
             return output;
         }
 
-        public Task CreateStatuses(StatusModel status)
+        public Task CreateStatus(StatusModel status)
         {
             return _statuses.InsertOneAsync(status);
         }
